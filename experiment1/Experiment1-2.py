@@ -38,15 +38,11 @@ def mean_squared_error(y,t):
       return 0.5 * np.sum((y-t)**2)
 
 def sigmoid(x):
-      # y = 1 / (1 + np.exp(-x))
-      # return y
       indices_pos = np.nonzero(x >= 0)
       indices_neg = np.nonzero(x < 0)
-
       y = np.zeros_like(x)
       y[indices_pos] = 1 / (1 + np.exp(-x[indices_pos]))
       y[indices_neg] = np.exp(x[indices_neg]) / (1 + np.exp(x[indices_neg]))
-
       return y
 
 def predict(network, x):
@@ -102,6 +98,7 @@ def get_data(mnist):
 
       bean = DataSetBean(x_train, y_train, x_test, y_test)
       return bean
+
 '''
 使用批处理
 '''
@@ -114,6 +111,7 @@ def batch():
             x_batch = x_test_gz[i:i + batch_size]
             y_batch = predict(network, x_batch)
             p = np.argmax(y_batch, axis=1)
+            print(p)
             accuracy_cnt += np.sum(p == y_test_gz[i:i + batch_size])
       return "Accuracy:" + str(float(accuracy_cnt) / len(x_test_gz))
 
